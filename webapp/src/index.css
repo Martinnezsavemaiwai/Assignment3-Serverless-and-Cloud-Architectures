@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Sarabun:wght@300;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #e8f4ff;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='%2329b6f6' fill-opacity='0.1'%3E%3Cpath d='M20 0c11 0 20 9 20 20s-9 20-20 20S0 31 0 20 9 0 20 0zm0 5c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 5c5.5 0 10 4.5 10 10s-4.5 10-10 10-10-4.5-10-10 4.5-10 10-10z'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(to bottom right, #e0f7fa 0%, #e3f2fd 50%, #e0f7fa 100%);
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.results-container {
+  max-width: 1200px;  
+  margin: 0 auto;
+  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 110, 255, 0.1);
+  position: relative;
+  border: 2px solid #84c7ff;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 40 40'%3E%3Cpath d='M20 0L0 20h20L0 40h40V0H20z' fill='%23b3e5fc' fill-opacity='0.1'/%3E%3C/svg%3E");
+  background-position: center;
+}
+
+/* ตกแต่งด้วยดอกไม้สงกรานต์ */
+.results-container::before,
+.results-container::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+}
+
+.results-container::before {
+  top: -30px;
+  left: -30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23FF9E80' d='M50,2.5c-26.2,0-47.5,21.3-47.5,47.5c0,26.2,21.3,47.5,47.5,47.5c26.2,0,47.5-21.3,47.5-47.5 C97.5,23.8,76.2,2.5,50,2.5z'/%3E%3Cpath fill='%23FFCCBC' d='M50,15c-19.3,0-35,15.7-35,35s15.7,35,35,35s35-15.7,35-35S69.3,15,50,15z'/%3E%3Cpath fill='%23FF6D00' d='M50,27.5c-12.4,0-22.5,10.1-22.5,22.5S37.6,72.5,50,72.5S72.5,62.4,72.5,50S62.4,27.5,50,27.5z'/%3E%3Ccircle fill='%23FFCCBC' cx='50' cy='50' r='10'/%3E%3C/svg%3E");
+  transform: rotate(-15deg);
+}
+
+.results-container::after {
+  bottom: -30px;
+  right: -30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%2340C4FF' d='M50,2.5c-26.2,0-47.5,21.3-47.5,47.5c0,26.2,21.3,47.5,47.5,47.5c26.2,0,47.5-21.3,47.5-47.5 C97.5,23.8,76.2,2.5,50,2.5z'/%3E%3Cpath fill='%2381D4FA' d='M50,15c-19.3,0-35,15.7-35,35s15.7,35,35,35s35-15.7,35-35S69.3,15,50,15z'/%3E%3Cpath fill='%230288D1' d='M50,27.5c-12.4,0-22.5,10.1-22.5,22.5S37.6,72.5,50,72.5S72.5,62.4,72.5,50S62.4,27.5,50,27.5z'/%3E%3Ccircle fill='%2381D4FA' cx='50' cy='50' r='10'/%3E%3C/svg%3E");
+  transform: rotate(15deg);
+}
+
+h1 {
+  color: #0277bd;
+  margin-bottom: 30px;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 2.4rem;
+  position: relative;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #c8e6ff, rgba(255, 255, 255, 0));
+}
+
+h1::before,
+h1::after {
+  content: "🪣";  
+  margin: 0 15px;
+  font-size: 2rem;
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, #4fc3f7, transparent);
+  border-radius: 5px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.5rem;
+  color: #0288d1;
+  background-image: linear-gradient(90deg, rgba(2,119,189,0) 0%, rgba(2,119,189,0.1) 50%, rgba(2,119,189,0) 100%);
+  border-radius: 10px;
+  padding: 20px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.error {
+  background-color: #ffebee;
+  border: 2px solid #ffcdd2;
+  color: #c62828;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.songkran-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+}
+
+.songkran-table::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, #29b6f6, #81d4fa, #29b6f6);
+  border-radius: 15px;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.songkran-table thead {
+  background: linear-gradient(90deg, #039be5, #29b6f6);
+  color: white;
+  position: relative;
+}
+
+.songkran-table th {
+  padding: 18px;
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  border-bottom: 3px solid #b3e5fc;
+  color: white;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.songkran-table thead::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23b3e5fc' fill-opacity='1' d='M0,160L48,138.7C96,117,192,75,288,74.7C384,75,480,117,576,160C672,203,768,245,864,224C960,203,1056,117,1152,85.3C1248,53,1344,75,1392,85.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: cover;
+  bottom: -15px;
+  left: 0;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.songkran-table tbody tr {
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.songkran-table tbody tr:nth-child(even) {
+  background-color: #f0f9ff;
+}
+
+.songkran-table tbody tr:hover {
+  background-color: #e1f5fe;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.songkran-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e1f5fe;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.songkran-table td:hover::after {
+  content: "💧";
+  position: absolute;
+  font-size: 14px;
+  animation: water-splash 0.5s ease-out;
+  opacity: 0;
+}
+
+@keyframes water-splash {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
+  100% { transform: translate(-50%, -100%) scale(1.2); opacity: 0; }
+}
+
+.songkran-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.id-column {
+  width: 10%;
+  color: #0277bd;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.id-column::before {
+  content: "🌊"; 
+  font-size: 0.9em;
+  margin-right: 5px;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+
+.message-column {
+  width: 60%;
+  text-align: center;
+}
+
+.time-column {
+  width: 30%;
+  color: #546e7a;
+  font-size: 0.95rem;
+  text-align: center;
+  position: relative;
+}
+
+.time-icon {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 1.1rem;
+}
+
+.time-icon::before {
+  content: "🌺"; 
+  margin-right: 5px;
+}
+
+.water-splash-button {
+  display: block;
+  margin: 30px auto 10px;
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #4fc3f7, #039be5);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Prompt', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(3, 155, 229, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.water-splash-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(3, 155, 229, 0.4);
+}
+
+.water-splash-button::before {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.water-splash-button::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s ease-out;
+  z-index: -1;
+}
+
+.water-splash-button:hover::after {
+  transform: translate(-50%, -50%) scale(2);
+}
+
+@media (max-width: 768px) {
+  .results-container {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  .songkran-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .songkran-table th,
+  .songkran-table td {
+    padding: 12px;
+  }
+  
+  .water-splash-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .results-container {
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  h1::before,
+  h1::after {
+    margin: 0 8px;
+    font-size: 1.4rem;
+  }
+  
+  .songkran-table th,
+  .songkran-table td {
+    padding: 8px;
+  }
+  
+  .time-column {
+    font-size: 0.85rem;
+  }
+  
+  .water-splash-button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}

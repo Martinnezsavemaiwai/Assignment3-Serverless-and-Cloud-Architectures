@@ -1,0 +1,118 @@
+version: '3.8'
+
+networks:
+  moniter_network:
+    name: moniter_network
+    driver: bridge
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - moniter_network
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # RabbitMQ queue
+      - "15672:15672"  # RabbitMQ Web UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - moniter_network
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    networks:
+      - moniter_network
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    ports:
+      - "9091:9091"
+    networks:
+      - moniter_network
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - moniter_network
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini:ro
+  frontend:
+    build: ./webapp
+    container_name: webapp_container
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - moniter_network
+    volumes:
+      - ./webapp:/app
+      - /app/node_modules
+    env_file:
+      - .env
+
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - moniter_network
+    volumes:
+      - ./backend:/app
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: always
+    networks:
+      - moniter_network
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - grafana
+      - prometheus
+      - rabbitmq
+      - pushgateway
+   
+volumes:
+  rabbitmq_data:
+  grafana_data:
+  postgres_data:
